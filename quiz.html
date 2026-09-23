@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Career quiz | Careerix</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Ccircle cx=%276%27 cy=%2722%27 r=%274%27 fill=%27%23f2b01e%27/%3E%3Cpath d=%27M6 22 C6 10, 24 20, 24 8%27 stroke=%27%230e7c7b%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%2724%27 cy=%278%27 r=%274%27 fill=%27%2315233b%27/%3E%3C/svg%3E">
+  <meta name="description" content="Answer 10 quick questions about what you enjoy and see career ideas that fit.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="quiz">
+  <div id="site-header"></div>
+
+  <main class="section">
+    <div class="wrap">
+      <h1>Career quiz</h1>
+      <p class="muted">10 quick questions about what you enjoy. There are no right or wrong answers.</p>
+      <div id="quiz"></div>
+    </div>
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script>
+/*
+  Careerix career data.
+  To add a career: copy one block below, change the values, and add it to the list.
+  Roadmap step "s" (stage) must be one of: "9", "10", "11", "12", "college", "work".
+  Set verified:true only after you have checked every fact on the official websites.
+*/
+window.CAREERS = [
+  {
+    id: "doctor",
+    name: "Doctor (MBBS)",
+    tagline: "Diagnose and treat patients. Long study, high responsibility, respected everywhere.",
+    streams: ["Science"],
+    streamNote: "Science with Physics, Chemistry, Biology and English (PCB)",
+    verified: true,
+    updated: "September 2026",
+    overview: "To become a doctor in India you complete MBBS after Class 12. Admission is only through NEET UG, so your Class 11 and 12 preparation decides everything. After MBBS you can start working or study further for a specialty.",
+    roadmap: [
+      { s: "9", t: "Build strong basics", d: "Focus on NCERT Science and Maths. Read the Biology chapters with curiosity. There is no exam yet, but concepts learned now make Class 11 easier." },
+      { s: "10", t: "Choose Science with Biology", d: "After Class 10 pick the Science stream with Physics, Chemistry, Biology and English. Check that your school offers PCB (or PCMB)." },
+      { s: "11", t: "Start NEET-focused study", d: "Study NCERT Class 11 Physics, Chemistry and Biology line by line. Take chapter tests. Decide whether you will self-study, join coaching, or use an online course." },
+      { s: "12", t: "Class 12 boards and NEET UG", d: "Pass Class 12 with PCB and English. The usual minimum is 50% aggregate for General category (lower for reserved categories). Appear for NEET UG, conducted by NTA, usually in May. You must be at least 17 years old by 31 December of the admission year." },
+      { s: "12", t: "Counselling and seat allotment", d: "MCC runs counselling for the 15% All India Quota and central institutes. Each state runs its own counselling for the 85% state quota seats, and state domicile rules apply. Register, fill choices, and report to your allotted college." },
+      { s: "college", t: "MBBS: 5.5 years", d: "4.5 years of study plus 1 year of compulsory rotating internship in a hospital." },
+      { s: "work", t: "Register and start practising", d: "After internship you register with the State Medical Council / NMC to practise as a doctor." },
+      { s: "work", t: "Specialise (optional)", d: "Take NEET PG for MD/MS or diploma courses. Super-specialisation (DM/MCh) comes after that." }
+    ],
+    subjects: ["Physics", "Chemistry", "Biology", "English"],
+    skills: ["Patience and empathy", "Strong memory and concepts", "Handling long study hours", "Calm under pressure", "Clear communication with patients"],
+    exams: [
+      { name: "NEET UG", body: "National Testing Agency (NTA)", note: "The only entrance for MBBS in India, including private and deemed universities." },
+      { name: "NEET PG", body: "NBEMS", note: "After MBBS, for MD/MS and diploma seats." }
+    ],
+    courses: [
+      { name: "MBBS", duration: "5.5 years (including 1 year internship)" },
+      { name: "Other NEET routes: BDS, BAMS, BHMS, BSc Nursing", duration: "Around 4 to 5.5 years" }
+    ],
+    cost: {
+      govt: "Very low in government colleges: roughly ₹1 lakh to ₹10 lakh for the whole course, depending on the state.",
+      private: "Roughly ₹50 lakh to ₹1.5 crore or more for the whole course.",
+      note: "Approximate. Fees differ by state and college. Check the official fee details in MCC or state counselling."
+    },
+    roles: [
+      { title: "Government Medical Officer", pay: "Fixed pay scale plus allowances; varies by state" },
+      { title: "Resident doctor (during MD/MS)", pay: "Monthly stipend; varies by college" },
+      { title: "Specialist / Surgeon", pay: "Rises a lot after specialisation; varies widely" },
+      { title: "Public health, medical research, teaching", pay: "Depends on institution and role" }
+    ],
+    salaryNote: "Early years are usually modest and pay grows after specialisation. Pay depends heavily on state, hospital and specialty. Treat any number you see online as a rough guide.",
+    faqs: [
+      { q: "Can I become a doctor without NEET?", a: "No. NEET UG is compulsory for MBBS in India, in government and private colleges." },
+      { q: "Do I need Maths for MBBS?", a: "No. You need Physics, Chemistry, Biology and English in Class 12." },
+      { q: "Government or private college?", a: "Government seats cost far less but need a much higher NEET rank. Private seats are easier to get but very expensive." },
+      { q: "How many times can I attempt NEET?", a: "There is currently no limit on attempts and no upper age limit, but always confirm in the latest NEET information bulletin." },
+      { q: "What if I do not get MBBS?", a: "NEET also opens BDS, AYUSH courses (BAMS, BHMS), BSc Nursing and allied health courses. You can also repeat the attempt." }
+    ],
+    checklist: [
+      "Choose Science with Biology after Class 10",
+      "Finish NCERT Biology, Chemistry and Physics line by line",
+      "Read the NEET UG information bulletin when NTA releases it",
+      "Solve previous year NEET papers",
+      "Register for NEET UG only on the official website",
+      "Keep documents ready for counselling (marksheets, ID, category certificate)",
+      "Plan a backup: BDS, AYUSH, Nursing or a repeat attempt"
+    ],
+    sources: [
+      { label: "NEET UG (NTA)", url: "https://neet.nta.nic.in" },
+      { label: "National Medical Commission", url: "https://www.nmc.org.in" },
+      { label: "MCC counselling", url: "https://mcc.nic.in" }
+    ],
+    tags: { bio: 3, people: 2, service: 2, research: 1 }
+  },
+
+  {
+    id: "engineer",
+    name: "Engineer",
+    tagline: "Design and build machines, buildings, circuits and systems. Maths and problem solving all the way.",
+    streams: ["Science"],
+    streamNote: "Science with Physics, Maths compulsory, plus Chemistry (most common), Biology, Biotechnology or a vocational subject",
+    verified: true,
+    updated: "September 2026",
+    overview: "Most engineers do a 4-year B.Tech after Class 12. JEE Main has no age limit and no minimum Class 12 marks just to appear, but admission to NITs, IIITs and GFTIs needs 75% aggregate in Class 12 (65% for SC/ST/PwD), or a top-20-percentile finish. Top government institutes (IITs) admit through JEE Advanced, which only students among the top scorers of JEE Main can attempt.",
+    roadmap: [
+      { s: "9", t: "Get strong in Maths and Science", d: "Build your basics in Maths and Physics. Practise problems, not just reading." },
+      { s: "10", t: "Choose Science with Maths (PCM)", d: "After Class 10 pick Physics, Maths and one more subject from Chemistry, Biology, Biotechnology or a vocational subject, along with English." },
+      { s: "11", t: "Start JEE-level preparation", d: "Study NCERT first, then problem books. Decide between self-study, coaching or online classes." },
+      { s: "12", t: "Boards and JEE / state exams", d: "Physics and Maths are compulsory in Class 12 for JEE Main; there is no minimum percentage or age limit to appear in the exam itself. Appear for JEE Main (2 sessions, up to 6 attempts over 3 years); admission to NITs, IIITs and GFTIs needs 75% aggregate in Class 12 (65% for SC/ST/PwD). Top JEE Main scorers can then appear for JEE Advanced (for IITs), which has its own separate age condition (born on or after 1 October 2002 for General/OBC-NCL/EWS, with relaxation for SC/ST/PwD). Also check state entrance exams and private university exams such as BITSAT and VITEEE." },
+      { s: "college", t: "B.Tech: 4 years", d: "Choose a branch (Computer Science, Mechanical, Civil, Electrical, Electronics and more). Do internships from the 2nd or 3rd year and build projects." },
+      { s: "work", t: "Job, GATE or higher studies", d: "Options: campus placement, government/PSU jobs through GATE, M.Tech, MBA, or starting your own venture." }
+    ],
+    subjects: ["Physics", "Maths", "Chemistry / Biology / vocational subject", "English"],
+    skills: ["Logical thinking", "Problem solving", "Basic coding", "Curiosity about how things work"],
+    exams: [
+      { name: "JEE Main", body: "National Testing Agency (NTA)", note: "No age limit to appear; up to 6 attempts over 3 consecutive years from your Class 12 passing year. For NITs, IIITs and GFTIs." },
+      { name: "JEE Advanced", body: "Conducted by an IIT on rotation", note: "Only for the top scorers of JEE Main. Has its own age condition (born on or after 1 Oct 2002 for General/OBC-NCL/EWS, with SC/ST/PwD relaxation) — for admission to IITs." },
+      { name: "State entrance exams and BITSAT / VITEEE", body: "Various", note: "For state and private colleges." },
+      { name: "GATE", body: "IITs / IISc", note: "After B.Tech, for M.Tech and PSU jobs." }
+    ],
+    courses: [
+      { name: "B.Tech / B.E.", duration: "4 years" },
+      { name: "M.Tech (optional)", duration: "2 years" }
+    ],
+    cost: {
+      govt: "Government institutes (IIT/NIT) cost roughly ₹5 lakh to ₹10 lakh for the full course.",
+      private: "Private colleges roughly ₹8 lakh to ₹25 lakh or more for the full course.",
+      note: "Approximate. Fees change each year and differ by college. Check the official website of each college."
+    },
+    roles: [
+      { title: "Software / IT engineer", pay: "Entry pay varies widely by company and college" },
+      { title: "Core engineer (mechanical, civil, electrical)", pay: "Usually lower at entry than IT and grows with experience" },
+      { title: "PSU / government engineer", pay: "Fixed government pay scale" },
+      { title: "Research, M.Tech, MBA or startup", pay: "Depends on path" }
+    ],
+    salaryNote: "Pay depends far more on your skills, college and branch than on the degree itself.",
+    faqs: [
+      { q: "Is there an age limit for JEE?", a: "JEE Main has no age limit. JEE Advanced has its own separate age condition tied to your birth date, so check the official notification if you took a long gap." },
+      { q: "Do I need coaching for JEE?", a: "Not compulsory. Many students crack it through self-study or online classes. Coaching helps some people with structure and practice." },
+      { q: "Can I become an engineer without JEE?", a: "Yes. Many state and private colleges admit through state exams, BITSAT, VITEEE or their own tests." },
+      { q: "Is Maths compulsory?", a: "Yes. Physics and Maths are compulsory in Class 12 for JEE Main, along with one more subject from Chemistry, Biology, Biotechnology or a vocational subject." },
+      { q: "Which branch should I choose?", a: "Pick by interest and by what you enjoy building or solving, not only by placement stories." }
+    ],
+    checklist: [
+      "Choose Science with Maths after Class 10",
+      "Finish NCERT Physics, Chemistry and Maths",
+      "Read the JEE Main information bulletin on the official site",
+      "Solve previous year JEE papers",
+      "Check state entrance exams and private college exams",
+      "Start a small project or learn basic coding"
+    ],
+    sources: [
+      { label: "JEE Main (NTA)", url: "https://jeemain.nta.nic.in" },
+      { label: "JEE Advanced", url: "https://jeeadv.ac.in" }
+    ],
+    tags: { maths: 3, tech: 2, research: 1 }
+  },
+
+  {
+    id: "software-developer",
+    name: "Software Developer",
+    tagline: "Build apps, websites and software. You can start learning from home, even in school.",
+    streams: ["Science", "Commerce", "Arts"],
+    streamNote: "Any stream works. Maths helps but is not compulsory.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Software developers write the code behind apps, websites and games. You can enter through a degree (B.Tech CSE, BCA, B.Sc Computer Science) or by learning skills yourself and building a portfolio of projects. CUET has no age limit and no fixed minimum Class 12 marks from NTA, though individual universities set their own course cut-offs.",
+    roadmap: [
+      { s: "9", t: "Try coding for free", d: "Start with a beginner course on Python or web basics (HTML, CSS, JavaScript). Build tiny things like a calculator or a quiz page." },
+      { s: "10", t: "Pick a stream that keeps options open", d: "Science with Maths gives the most options (B.Tech). Commerce or Arts with Computer Science can lead to BCA or B.Sc." },
+      { s: "11", t: "Learn one language properly", d: "Go deeper in Python or JavaScript. Learn how to use GitHub and put your projects online." },
+      { s: "12", t: "Choose your route", d: "Route A: B.Tech CSE through JEE or state exams. Route B: BCA / B.Sc Computer Science, often through CUET or the college's own test." },
+      { s: "college", t: "Degree plus real projects", d: "3 to 4 years. Build projects, do internships, contribute to open source, and practise problem solving." },
+      { s: "work", t: "First job and growth", d: "Start as a junior or intern developer, then specialise: web, mobile, backend, cloud, AI or cybersecurity." }
+    ],
+    subjects: ["Maths (helpful)", "Computer Science / Informatics Practices (if available)", "English"],
+    skills: ["Logical thinking", "One programming language", "Problem solving", "Reading documentation", "Patience with debugging"],
+    exams: [
+      { name: "JEE Main / state exams", body: "NTA / states", note: "For B.Tech CSE." },
+      { name: "CUET", body: "National Testing Agency (NTA)", note: "For many central universities' BCA / B.Sc programmes." },
+      { name: "College's own entrance tests", body: "Various", note: "Common for BCA and private universities." }
+    ],
+    courses: [
+      { name: "B.Tech CSE / IT", duration: "4 years" },
+      { name: "BCA or B.Sc Computer Science", duration: "3 years" },
+      { name: "MCA (optional)", duration: "2 years" }
+    ],
+    cost: {
+      govt: "Government colleges are the cheapest route, roughly ₹1 lakh to ₹10 lakh depending on the course.",
+      private: "Private colleges roughly ₹3 lakh to ₹20 lakh or more depending on the course and college.",
+      note: "Approximate. Many free resources exist, so your skills can grow whatever college you get."
+    },
+    roles: [
+      { title: "Frontend / Backend / Full-stack developer", pay: "Entry pay varies widely by company" },
+      { title: "Mobile app developer", pay: "Varies" },
+      { title: "Data or AI engineer", pay: "Varies; often needs stronger Maths" },
+      { title: "Freelance developer", pay: "Not fixed; depends on skills and clients" }
+    ],
+    salaryNote: "Skills and projects matter more than the name of your degree. Pay varies a lot between companies. Be careful about ads promising guaranteed jobs or income.",
+    faqs: [
+      { q: "Can I become a developer without a B.Tech?", a: "Yes. BCA, B.Sc or self-learning with a strong portfolio can work. Some companies still prefer a degree, so keep a degree route open." },
+      { q: "Which language should I start with?", a: "Python is a friendly start. JavaScript is great if you want to build websites." },
+      { q: "Do I need a laptop?", a: "It helps a lot, but you can begin on a phone with browser-based coding tools and move to a laptop later." },
+      { q: "Is AI going to replace developers?", a: "AI tools change how developers work, but people who understand problems and code well are still needed. Learn to use AI tools while you build strong basics." }
+    ],
+    checklist: [
+      "Complete one free beginner course",
+      "Build 3 small projects",
+      "Create a GitHub account and upload your projects",
+      "Learn basic problem solving (arrays, loops, logic)",
+      "Choose a degree route for after Class 12",
+      "Avoid paid courses that promise guaranteed jobs"
+    ],
+    sources: [
+      { label: "CUET (NTA)", url: "https://cuet.nta.nic.in" },
+      { label: "JEE Main (NTA)", url: "https://jeemain.nta.nic.in" }
+    ],
+    tags: { tech: 3, maths: 2, create: 1 }
+  },
+
+  {
+    id: "ca-finance",
+    name: "CA / Finance",
+    tagline: "Work with accounts, tax, audit and money. Tough exams, strong demand.",
+    streams: ["Commerce", "Science", "Arts"],
+    streamNote: "Commerce is common, but students from any stream can enter.",
+    verified: true,
+    updated: "September 2026",
+    overview: "A Chartered Accountant (CA) handles accounting, tax, auditing and financial advice. CA is a professional course run by ICAI, not a normal degree. Registration for CA Foundation needs a mandatory 4-month study gap before the exam (so register at least 4 months before your target attempt), and CA Intermediate needs an 8-month gap. Many students also do B.Com alongside. Other finance routes are CMA, CFA and CS.",
+    roadmap: [
+      { s: "9", t: "Get comfortable with Maths and Accounts", d: "Build number sense. If your school offers it, learn basic Commerce ideas." },
+      { s: "10", t: "Choose Commerce (or another stream)", d: "Commerce with Accountancy, Business Studies and Economics is the most direct. Maths is helpful." },
+      { s: "11", t: "Learn Accountancy well", d: "Practise journal entries and ledgers. Consider learning basic Excel." },
+      { s: "12", t: "Register for CA Foundation", d: "Register with ICAI and take the CA Foundation exam. Check ICAI's latest rules for registration timing and eligibility." },
+      { s: "college", t: "CA Intermediate, articleship, Final", d: "Pass Intermediate, complete practical training (articleship) with a practising CA, then clear the Final. Many students do B.Com or another degree in parallel." },
+      { s: "work", t: "Practice, job or higher finance", d: "Options: work in a firm, corporate finance, start your own practice, or move into investment or consulting roles." }
+    ],
+    subjects: ["Accountancy", "Business Studies", "Economics", "Maths (helpful)"],
+    skills: ["Attention to detail", "Comfort with numbers", "Discipline for long exams", "Basic Excel", "Honesty and ethics"],
+    exams: [
+      { name: "CA Foundation, Intermediate and Final", body: "ICAI", note: "Foundation needs a 4-month study gap after registering; Intermediate needs 8 months. Graduates (55% Commerce / 60% others) can skip Foundation via the Direct Entry route. Check ICAI for the latest scheme and attempt dates." },
+      { name: "CMA / CS / CFA (alternatives)", body: "ICMAI / ICSI / CFA Institute", note: "Other finance qualifications." }
+    ],
+    courses: [
+      { name: "CA (Foundation, Intermediate, Final)", duration: "Roughly 4.5 to 5+ years including articleship" },
+      { name: "B.Com (in parallel or alone)", duration: "3 years" }
+    ],
+    cost: {
+      govt: "CA exam fees are relatively low compared with other professional courses.",
+      private: "Coaching is optional and can add a significant cost.",
+      note: "Approximate and changes often. Check ICAI's official fee details."
+    },
+    roles: [
+      { title: "Chartered Accountant (practice)", pay: "Grows with your client base and experience" },
+      { title: "Auditor / Tax consultant", pay: "Varies by firm" },
+      { title: "Corporate finance / CFO track", pay: "Varies by company" },
+      { title: "Investment or financial analyst", pay: "Varies" }
+    ],
+    salaryNote: "CA fresher pay varies by firm and city and grows with experience. Pass rates are low, so consistent effort matters more than a quick result.",
+    faqs: [
+      { q: "Is CA very hard?", a: "Yes, pass rates are low. But steady study and practice work for many students." },
+      { q: "Can I do CA and B.Com together?", a: "Many students do. Check your college's attendance rules." },
+      { q: "Is CA possible from Science or Arts?", a: "Yes. The route starts with ICAI registration, which is open to students from all streams." }
+    ],
+    checklist: [
+      "Read ICAI's latest student pages on eligibility and registration",
+      "Pick Commerce or keep another stream with a plan",
+      "Practise Accountancy every week",
+      "Learn basic Excel",
+      "Plan articleship early"
+    ],
+    sources: [
+      { label: "ICAI (official)", url: "https://www.icai.org" }
+    ],
+    tags: { finance: 3, maths: 2, business: 1 }
+  },
+
+  {
+    id: "lawyer",
+    name: "Lawyer",
+    tagline: "Argue cases, advise companies and protect people's rights. Reading, writing and speaking matter most.",
+    streams: ["Arts", "Commerce", "Science"],
+    streamNote: "Any stream is accepted for law entrance exams.",
+    verified: true,
+    updated: "September 2026",
+    overview: "You can study law right after Class 12 through a 5-year integrated course (BA LLB, BBA LLB), or after graduation through a 3-year LLB. CLAT has no upper age limit and needs 45% in Class 12 (40% for SC/ST), and is held once a year (CLAT 2027 is set for 6 December 2026). To practise in court you enrol with a State Bar Council and clear the All India Bar Examination.",
+    roadmap: [
+      { s: "9", t: "Read and speak more", d: "Read newspapers, join debates and practise writing clearly." },
+      { s: "10", t: "Any stream works", d: "Arts (History, Political Science) is common, but Commerce and Science students can also take law." },
+      { s: "11", t: "Build reading and reasoning skills", d: "Read the news daily, practise logical reasoning, basic quantitative technique questions, and improve English." },
+      { s: "12", t: "Law entrance exams", d: "CLAT has no age limit and needs 45% in Class 12 (40% SC/ST/PwD); it tests English, current affairs, legal reasoning, logical reasoning and quantitative techniques across 24 NLUs. Also check AILET (NLU Delhi), LSAT India or university-specific tests. Check each exam's official notification for exact dates." },
+      { s: "college", t: "5-year integrated law or 3-year LLB", d: "Do moot courts, internships with lawyers and courts, and legal writing." },
+      { s: "work", t: "Enrol and choose a path", d: "Enrol with a State Bar Council, clear AIBE, and choose litigation, corporate law, judiciary (judicial services exams), or legal advisory." }
+    ],
+    subjects: ["English", "History / Political Science (helpful)", "Any stream subjects"],
+    skills: ["Reading fast and clearly", "Logical reasoning", "Basic quantitative aptitude", "Writing and speaking", "Patience and research"],
+    exams: [
+      { name: "CLAT", body: "Consortium of NLUs", note: "No age limit; 45% in Class 12 (40% SC/ST). For 24 National Law Universities." },
+      { name: "AILET", body: "NLU Delhi", note: "For NLU Delhi." },
+      { name: "AIBE", body: "Bar Council of India", note: "After law, to practise as an advocate." },
+      { name: "Judicial Services exams", body: "State High Courts / PSCs", note: "To become a judge (magistrate) after LLB." }
+    ],
+    courses: [
+      { name: "BA LLB / BBA LLB (integrated)", duration: "5 years" },
+      { name: "LLB after graduation", duration: "3 years" },
+      { name: "LLM (optional)", duration: "1 to 2 years" }
+    ],
+    cost: {
+      govt: "Public law universities are relatively affordable.",
+      private: "Private law universities can be very expensive.",
+      note: "Approximate; check each university's official fees."
+    },
+    roles: [
+      { title: "Litigation advocate", pay: "Modest at first; grows with experience and reputation" },
+      { title: "Corporate lawyer", pay: "Often higher, especially from top law schools" },
+      { title: "Judge (judicial services)", pay: "Fixed government pay scale" },
+      { title: "Legal advisor / in-house counsel", pay: "Varies" }
+    ],
+    salaryNote: "Early litigation income is often modest and grows with time. Corporate roles from top colleges pay more. Results vary a lot.",
+    faqs: [
+      { q: "Is Maths needed for law?", a: "Not much. Reading, reasoning and English are more important." },
+      { q: "Can I do law after graduation?", a: "Yes. You can do a 3-year LLB after any graduation degree." },
+      { q: "How do I become a judge?", a: "Complete LLB and clear the Judicial Services exam of your state or the relevant high court." }
+    ],
+    checklist: [
+      "Read a newspaper every day",
+      "Practise English and logical reasoning",
+      "Note CLAT dates from the official consortium website",
+      "Attend a moot court or debate",
+      "Find a lawyer or court intern option during college"
+    ],
+    sources: [
+      { label: "Consortium of NLUs (CLAT)", url: "https://consortiumofnlus.ac.in" },
+      { label: "Bar Council of India", url: "https://www.barcouncilofindia.org" }
+    ],
+    tags: { law: 3, write: 2, people: 1, service: 1 }
+  },
+
+  {
+    id: "teacher",
+    name: "Teacher / Professor",
+    tagline: "Help others learn. Stable career with real impact on students.",
+    streams: ["Arts", "Commerce", "Science"],
+    streamNote: "Choose the stream of the subject you want to teach.",
+    verified: true,
+    updated: "September 2026",
+    overview: "To teach in schools you usually need a graduation degree in your subject plus a teacher training degree (B.Ed, standardised to 2 years by NCTE), and you clear TET/CTET (no upper age limit, minimum age 17, no limit on attempts). To teach in colleges you generally complete a master's degree and clear NET, or hold a PhD.",
+    roadmap: [
+      { s: "9", t: "Practise explaining", d: "Help classmates with a topic. Teaching others is the best way to learn." },
+      { s: "10", t: "Choose a stream by your teaching subject", d: "Pick the stream that matches the subject you love, such as Maths, Science, English or History." },
+      { s: "11", t: "Go deep in your subject", d: "Build strong understanding of your favourite subject." },
+      { s: "12", t: "Choose your degree route", d: "Route A: graduation in your subject, then B.Ed. Route B: an integrated teacher education programme (ITEP) if offered. CUET is used by many universities. Check the official notifications." },
+      { s: "college", t: "Graduation, then teacher training", d: "Finish your degree, then B.Ed (2 years) or an integrated course. For college teaching, continue to a master's degree." },
+      { s: "work", t: "TET / CTET, NET and jobs", d: "Clear TET/CTET for school jobs. Clear NET (and often PhD) for college and university jobs." }
+    ],
+    subjects: ["Your chosen teaching subject", "English or Hindi communication"],
+    skills: ["Clear explanation", "Patience", "Subject knowledge", "Speaking and listening"],
+    exams: [
+      { name: "CTET / State TET", body: "CBSE / states", note: "Eligibility for school teaching jobs." },
+      { name: "UGC NET", body: "NTA", note: "For assistant professor and research fellowship." },
+      { name: "CUET", body: "NTA", note: "For admission to many central universities." }
+    ],
+    courses: [
+      { name: "Graduation (B.A / B.Sc / B.Com)", duration: "3 years" },
+      { name: "B.Ed", duration: "2 years" },
+      { name: "M.A / M.Sc and PhD (for college teaching)", duration: "2 years plus research years" }
+    ],
+    cost: {
+      govt: "Government colleges keep costs low.",
+      private: "Private colleges cost more.",
+      note: "Approximate; check the official fee pages of the institutes."
+    },
+    roles: [
+      { title: "Primary / secondary school teacher", pay: "Varies by government or private school" },
+      { title: "College / university professor", pay: "Government pay scale; private varies" },
+      { title: "Coaching or online educator", pay: "Depends on students and reputation" },
+      { title: "Curriculum designer / education content creator", pay: "Varies" }
+    ],
+    salaryNote: "Government teaching jobs have fixed scales and are considered stable. Private school pay varies a lot.",
+    faqs: [
+      { q: "Do I need B.Ed to teach?", a: "For most school teaching jobs, yes. Check the latest NCTE and state rules." },
+      { q: "Can I teach online?", a: "Yes, but pay and stability vary. A strong subject base and communication skills matter." },
+      { q: "How do I teach in college?", a: "Complete a master's degree and clear UGC NET (or hold a PhD as per rules)." }
+    ],
+    checklist: [
+      "Decide the subject you want to teach",
+      "Practise explaining a topic to someone every week",
+      "Check current B.Ed and TET rules on official sites",
+      "Plan your degree and B.Ed timeline"
+    ],
+    sources: [
+      { label: "CTET", url: "https://ctet.nic.in" },
+      { label: "NCTE", url: "https://ncte.gov.in" }
+    ],
+    tags: { teach: 3, people: 2, write: 1, service: 1 }
+  },
+
+  {
+    id: "government-jobs",
+    name: "Government Jobs (UPSC, SSC, Banking)",
+    tagline: "Serve the country through civil services, administration, railways, banking and more.",
+    streams: ["Arts", "Commerce", "Science"],
+    streamNote: "Any stream. Most exams need a graduation degree first.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Government jobs are filled through exams. UPSC Civil Services (IAS, IPS, IFS and others) needs any graduation degree; age must be 21-32 for General/EWS (35 for OBC, 37 for SC/ST, up to 42 for PwBD, all as on 1 August of the exam year), with 6 attempts for General/EWS, 9 for OBC, and unlimited (within the age limit) for SC/ST. SSC, banking, railways and state PSC exams have different education and age rules. Competition is high, so a backup plan is wise.",
+    roadmap: [
+      { s: "9", t: "Build reading habits", d: "Read the newspaper and NCERT books. Take an interest in how the country works." },
+      { s: "10", t: "Choose the stream you enjoy", d: "Any stream can lead here. Choose what you can score well in." },
+      { s: "11", t: "Keep a strong base", d: "Focus on your subjects and keep reading current affairs and general knowledge." },
+      { s: "12", t: "Choose your graduation degree", d: "Pick a degree you can finish well. Consider a course that helps with a backup career." },
+      { s: "college", t: "Graduate and start exam preparation", d: "Study the syllabus for the exam you want (UPSC, SSC CGL, banking or state PSC). Check age limits and attempt limits on the official site." },
+      { s: "work", t: "Appear for exams and keep a backup", d: "Many candidates take more than one attempt. Keep a backup job or skill while you prepare." }
+    ],
+    subjects: ["Any stream", "Strong NCERT base (History, Geography, Polity, Economy, Science)"],
+    skills: ["Consistent study habit", "Current affairs awareness", "Answer writing", "Handling long preparation"],
+    exams: [
+      { name: "UPSC Civil Services Examination", body: "UPSC", note: "Prelims, Mains and Interview. Age 21-32 (General/EWS), 21-35 (OBC), 21-37 (SC/ST), as on 1 August of the exam year; always check the current notification." },
+      { name: "SSC CGL and similar", body: "Staff Selection Commission", note: "For many central government posts." },
+      { name: "IBPS / SBI exams", body: "IBPS / SBI", note: "For banking jobs." },
+      { name: "State PSC exams", body: "State Public Service Commissions", note: "For state civil services." }
+    ],
+    courses: [
+      { name: "Any graduation degree", duration: "3 to 4 years" }
+    ],
+    cost: {
+      govt: "The exam fees are low. Coaching is optional.",
+      private: "Coaching can cost from a small amount to a large amount depending on the programme.",
+      note: "Approximate. Many students use free resources and self-study."
+    },
+    roles: [
+      { title: "IAS / IPS / IFS and other Civil Services", pay: "Government pay scale plus allowances" },
+      { title: "SSC posts (clerk, inspector, officer)", pay: "Government pay scale" },
+      { title: "Bank PO / Clerk", pay: "Bank pay scale" },
+      { title: "State civil services", pay: "State pay scale" }
+    ],
+    salaryNote: "Pay is decided by government pay scales and allowances, and the job security is a major attraction. Success is not guaranteed, so plan a backup.",
+    faqs: [
+      { q: "Can I prepare while studying in college?", a: "Yes. Many students start in the final years of graduation." },
+      { q: "Is coaching required?", a: "Not required. Many candidates succeed with self-study." },
+      { q: "How many attempts do I get for UPSC?", a: "6 attempts for General/EWS, 9 for OBC, and unlimited attempts (within the age limit) for SC/ST. Always check the latest UPSC notification for exact figures." }
+    ],
+    checklist: [
+      "Read the official notification of your target exam",
+      "Read one newspaper daily",
+      "Read NCERT books",
+      "Note age and attempt limits from the official site",
+      "Plan a backup skill or job"
+    ],
+    sources: [
+      { label: "UPSC", url: "https://upsc.gov.in" },
+      { label: "SSC", url: "https://ssc.gov.in" }
+    ],
+    tags: { service: 3, law: 1, write: 1, people: 1 }
+  },
+
+  {
+    id: "defence-nda",
+    name: "Defence Officer (NDA)",
+    tagline: "Join the Army, Navy or Air Force as an officer. Fitness, discipline and courage.",
+    streams: ["Science", "Arts", "Commerce"],
+    streamNote: "Army wing accepts any stream. Air Force and Navy wings need Physics and Maths in Class 12.",
+    verified: true,
+    updated: "September 2026",
+    overview: "The National Defence Academy (NDA) exam is conducted by UPSC, twice a year, for students who are Class 12 pass or appearing (Class 11 students are not eligible). The age window is strict: 16.5 to 19.5 years, with no relaxation for any category. Since 2022, unmarried women can apply for all three wings (Army, Navy, Air Force). After NDA training you become an officer. Other routes include CDS after graduation. Physical and medical fitness are essential.",
+    roadmap: [
+      { s: "9", t: "Build fitness habits", d: "Run, do basic exercises and stay active. Sleep and diet matter." },
+      { s: "10", t: "Choose your stream with options in mind", d: "Science with Maths keeps all NDA wings open (Army, Navy, Air Force)." },
+      { s: "11", t: "Study and stay fit", d: "Prepare Maths and General Ability along with your regular subjects." },
+      { s: "12", t: "Appear for NDA exam", d: "Apply through the official UPSC notification. Check age limits, eligibility and gender rules in that notification. The process includes a written exam, SSB interview and medical tests." },
+      { s: "college", t: "Training at NDA, then officer training", d: "Cadets train at the NDA, then move to their service academy (IMA, Naval Academy or Air Force Academy)." },
+      { s: "work", t: "Commissioned officer", d: "Serve as an officer. Other entry routes include CDS after graduation." }
+    ],
+    subjects: ["Maths and Physics (for Air Force and Navy wings)", "English", "General knowledge"],
+    skills: ["Physical fitness", "Discipline", "Leadership", "Team spirit", "Mental strength"],
+    exams: [
+      { name: "NDA and NA exam", body: "UPSC", note: "Written exam, then SSB interview and medical." },
+      { name: "CDS", body: "UPSC", note: "After graduation, another officer entry route." },
+      { name: "Agniveer and other recruitment schemes", body: "Various", note: "Check the official notifications for the latest scheme details." }
+    ],
+    courses: [
+      { name: "NDA training with a degree", duration: "3 years at NDA plus 1 year at a service academy" }
+    ],
+    cost: {
+      govt: "Training and education at the academy are sponsored by the government.",
+      private: "Not applicable",
+      note: "Approximate. Check the official notification for details."
+    },
+    roles: [
+      { title: "Army officer", pay: "Government pay scale plus allowances" },
+      { title: "Navy officer", pay: "Government pay scale plus allowances" },
+      { title: "Air Force officer / pilot", pay: "Government pay scale plus allowances" }
+    ],
+    salaryNote: "Officers receive a government pay scale and allowances. The job is demanding and involves postings across the country.",
+    faqs: [
+      { q: "Can girls apply for NDA?", a: "Yes. Women are eligible under the current rules. Check the latest official notification for details." },
+      { q: "What is SSB?", a: "The Services Selection Board interview tests personality, leadership and mental strength over several days." },
+      { q: "What if I do not get selected?", a: "Keep studying. CDS after graduation and other routes exist, and you should always keep a backup plan." }
+    ],
+    checklist: [
+      "Start regular exercise and sleep habits",
+      "Take Science with Maths if you want all NDA wings open",
+      "Read the latest UPSC NDA notification for eligibility",
+      "Practise NDA previous year papers",
+      "Learn about SSB and practise communication skills"
+    ],
+    sources: [
+      { label: "UPSC (NDA)", url: "https://upsc.gov.in" }
+    ],
+    tags: { physical: 3, service: 3 }
+  },
+
+  {
+    id: "designer",
+    name: "Designer (UI/UX, Graphic, Product)",
+    tagline: "Make things look good and work well: apps, brands, posters, products.",
+    streams: ["Arts", "Science", "Commerce"],
+    streamNote: "Any stream. A portfolio of your work matters a lot.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Designers create the look and feel of apps, websites, brands and products. You can enter through design colleges (NID, NIFT, IIT design programmes via UCEED) or by building skills and a portfolio. Note that UCEED and NID B.Des have upper age limits tied to your birth date (similar to JEE Advanced), unlike most other design learning routes. Free tools like Canva and Figma let you start now.",
+    roadmap: [
+      { s: "9", t: "Start making things", d: "Draw, edit photos and try free tools like Canva. Make posters for school events." },
+      { s: "10", t: "Choose a stream you can also use as backup", d: "Any stream works. Keep drawing and design projects going alongside." },
+      { s: "11", t: "Build a small portfolio", d: "Collect 5 to 8 of your best designs. Learn the basics of colour, spacing and typography." },
+      { s: "12", t: "Design entrance exams", d: "Check exams such as NID DAT, NIFT entrance, UCEED (for IIT design programmes) and other design colleges' tests. Read each official notification." },
+      { s: "college", t: "B.Des or a related degree", d: "Typically 4 years. Do internships and grow your portfolio." },
+      { s: "work", t: "Work or freelance", d: "Join a studio or company, or freelance. Specialise in UI/UX, branding, motion or product design." }
+    ],
+    subjects: ["Any stream", "Art or drawing (helpful)"],
+    skills: ["Creativity", "Sketching or digital design", "Attention to detail", "Understanding users", "Accepting feedback"],
+    exams: [
+      { name: "UCEED", body: "IIT Bombay", note: "For B.Des at IIT design programmes and some others." },
+      { name: "NID DAT", body: "National Institute of Design", note: "For B.Des at NID." },
+      { name: "NIFT entrance", body: "NIFT", note: "For fashion and related design courses." }
+    ],
+    courses: [
+      { name: "B.Des", duration: "4 years" },
+      { name: "Design diploma or online certificates", duration: "Months to 1 to 2 years" }
+    ],
+    cost: {
+      govt: "Public design institutes have moderate fees.",
+      private: "Private design colleges can be expensive.",
+      note: "Approximate. Many free learning resources exist for the skills."
+    },
+    roles: [
+      { title: "UI/UX designer", pay: "Varies by company" },
+      { title: "Graphic / brand designer", pay: "Varies" },
+      { title: "Product designer", pay: "Varies" },
+      { title: "Freelance designer", pay: "Not fixed; depends on clients" }
+    ],
+    salaryNote: "Your portfolio matters more than certificates. Freelance income is not guaranteed.",
+    faqs: [
+      { q: "Do I need to be good at drawing?", a: "It helps for some design fields, but UI/UX and digital design rely more on thinking and tools." },
+      { q: "Can I start from my phone?", a: "Yes. Canva and Figma work in the browser or app, so you can begin right now." },
+      { q: "Do I need a design degree?", a: "Not always. Strong portfolios can open doors, but a degree adds structure and networking." }
+    ],
+    checklist: [
+      "Make 5 designs in Canva or Figma",
+      "Learn basics of colour, spacing and fonts",
+      "Save your best work as a small portfolio",
+      "Check UCEED / NID / NIFT official notifications",
+      "Ask for feedback and improve"
+    ],
+    sources: [
+      { label: "UCEED", url: "https://www.uceed.iitb.ac.in" },
+      { label: "NIFT", url: "https://www.nift.ac.in" }
+    ],
+    tags: { create: 3, tech: 1 }
+  },
+
+  {
+    id: "data-science-ai",
+    name: "Data Science / AI",
+    tagline: "Use data and machine learning to find patterns and build smart systems.",
+    streams: ["Science"],
+    streamNote: "Science with Maths is the strongest route.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Data scientists and AI engineers use Maths, statistics and programming to work with data and build models. The usual path is B.Tech (CSE/AI), or B.Sc in Maths, Statistics or Data Science, and then an M.Tech or MS for advanced roles.",
+    roadmap: [
+      { s: "9", t: "Enjoy Maths and try Python", d: "Practise Maths problems and try beginner Python." },
+      { s: "10", t: "Choose Science with Maths", d: "Maths is important for data science and AI." },
+      { s: "11", t: "Strengthen Maths and coding", d: "Learn probability and statistics basics. Practise Python." },
+      { s: "12", t: "Choose a degree", d: "B.Tech CSE/AI/Data Science through JEE or state exams, or B.Sc Maths, Statistics or Data Science through CUET or college exams." },
+      { s: "college", t: "Build data projects", d: "Learn Python, SQL, statistics and machine learning. Work on real projects and datasets, and do internships." },
+      { s: "work", t: "Entry role and specialise", d: "Start as an analyst or junior data scientist. Specialise in ML, NLP, computer vision or data engineering. Many roles prefer a master's degree." }
+    ],
+    subjects: ["Maths", "Physics", "Computer Science (if available)", "English"],
+    skills: ["Maths and statistics", "Python", "SQL", "Curiosity about data", "Clear explanation of findings"],
+    exams: [
+      { name: "JEE Main / state exams", body: "NTA / states", note: "For B.Tech." },
+      { name: "CUET", body: "NTA", note: "For B.Sc programmes at many universities." },
+      { name: "GATE", body: "IITs / IISc", note: "For M.Tech in related fields." }
+    ],
+    courses: [
+      { name: "B.Tech CSE / AI / Data Science", duration: "4 years" },
+      { name: "B.Sc Maths / Statistics / Data Science", duration: "3 years" },
+      { name: "M.Tech / MS / M.Sc (optional)", duration: "2 years" }
+    ],
+    cost: {
+      govt: "Government colleges are the most affordable.",
+      private: "Private colleges cost more; fees vary widely.",
+      note: "Approximate. Many quality courses are free online."
+    },
+    roles: [
+      { title: "Data analyst", pay: "Varies" },
+      { title: "Data scientist", pay: "Varies; often higher with advanced degrees" },
+      { title: "Machine learning engineer", pay: "Varies" },
+      { title: "AI researcher", pay: "Depends on institution and degree" }
+    ],
+    salaryNote: "Skills, projects and degrees affect pay. The field changes quickly, so learning never stops.",
+    faqs: [
+      { q: "Do I need very strong Maths?", a: "You need good Maths, especially statistics, probability and linear algebra, but you can build it step by step." },
+      { q: "Can I start without a laptop?", a: "You can learn theory on a phone, but coding practice is much easier on a laptop." },
+      { q: "Is a master's needed?", a: "Not always, but many advanced AI research roles prefer it." }
+    ],
+    checklist: [
+      "Practise Maths every week",
+      "Learn Python basics",
+      "Learn basic statistics and probability",
+      "Try a small data project",
+      "Choose your degree route after Class 12"
+    ],
+    sources: [
+      { label: "CUET (NTA)", url: "https://cuet.nta.nic.in" },
+      { label: "JEE Main (NTA)", url: "https://jeemain.nta.nic.in" }
+    ],
+    tags: { maths: 3, tech: 2, research: 2 }
+  },
+
+  {
+    id: "business-mba",
+    name: "Business / MBA",
+    tagline: "Manage teams, run companies or start your own. People, money and decisions.",
+    streams: ["Commerce", "Arts", "Science"],
+    streamNote: "Any stream. Commerce is a common start.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Business careers include management, marketing, sales, operations and entrepreneurship. You can do BBA or B.Com after Class 12, then an MBA (via CAT and other exams) after graduation. Integrated 5-year IPM programmes (via IPMAT) let you start right after Class 12 too — rules vary a lot by institute: IIM Indore has no fixed minimum Class 12 percentage, while IIM Rohtak needs 60% (55% SC/ST/PwD) and caps age at 20 (25 for SC/ST/PwD).",
+    roadmap: [
+      { s: "9", t: "Try small business ideas", d: "Sell something at a school fair or run a small project. Learn how money and customers work." },
+      { s: "10", t: "Choose the stream you can score in", d: "Commerce is common but Science and Arts can also lead to MBA later." },
+      { s: "11", t: "Learn basics of business and Maths", d: "Study Economics, Business Studies or Maths. Improve English and communication." },
+      { s: "12", t: "Choose BBA / B.Com or an integrated programme", d: "Options include BBA, B.Com, or integrated management programmes (for example, through IPMAT). Check each institute's official notification." },
+      { s: "college", t: "Graduate and gain experience", d: "Do internships, join clubs and build leadership experience." },
+      { s: "work", t: "MBA or start working", d: "MBA usually needs an entrance exam such as CAT, and many candidates work for a few years first. You can also start your own business." }
+    ],
+    subjects: ["Economics", "Business Studies", "Maths (helpful)", "English"],
+    skills: ["Communication", "Leadership", "Decision making", "Comfort with numbers", "Teamwork"],
+    exams: [
+      { name: "CAT", body: "IIMs", note: "For MBA at IIMs and many other B-schools." },
+      { name: "IPMAT", body: "IIM Indore / IIM Rohtak", note: "For integrated management programmes after Class 12." },
+      { name: "CUET / college tests", body: "NTA / colleges", note: "For BBA and B.Com admission." }
+    ],
+    courses: [
+      { name: "BBA / B.Com", duration: "3 years" },
+      { name: "MBA / PGDM", duration: "2 years" }
+    ],
+    cost: {
+      govt: "Public colleges are the cheapest for BBA / B.Com.",
+      private: "Top MBA programmes can be very expensive.",
+      note: "Approximate. Check fees and placement reports on the official websites."
+    },
+    roles: [
+      { title: "Manager (marketing, operations, HR, finance)", pay: "Varies by company and college" },
+      { title: "Consultant", pay: "Varies" },
+      { title: "Sales or business development", pay: "Often a mix of fixed pay and incentives" },
+      { title: "Entrepreneur", pay: "Not fixed; can be very uncertain" }
+    ],
+    salaryNote: "MBA pay depends heavily on the institute and your experience. Entrepreneurship has no guaranteed income.",
+    faqs: [
+      { q: "Do I need to be from Commerce?", a: "No. MBA accepts graduates from all streams." },
+      { q: "Should I work before an MBA?", a: "Many people do, because experience helps in interviews and learning." },
+      { q: "Can a student start a business?", a: "You can start small projects, but as a minor be careful about money, contracts and safety, and involve a parent or guardian." }
+    ],
+    checklist: [
+      "Try a small project or school business",
+      "Improve English and communication",
+      "Learn basic Excel",
+      "Check IPMAT / CAT official pages",
+      "Build leadership through clubs or teams"
+    ],
+    sources: [
+      { label: "IIM CAT", url: "https://iimcat.ac.in" }
+    ],
+    tags: { business: 3, people: 2, finance: 1 }
+  },
+
+  {
+    id: "content-creator-media",
+    name: "Content Creator / Media",
+    tagline: "Tell stories through video, writing, photos and audio. Creative, but earnings are uncertain.",
+    streams: ["Arts", "Commerce", "Science"],
+    streamNote: "Any stream. Skills and consistency matter most.",
+    verified: true,
+    updated: "September 2026",
+    overview: "Media and content careers include journalism, video editing, photography, writing, social media and film. You can start creating now with a phone. A degree in journalism or mass communication helps for news and media jobs.",
+    roadmap: [
+      { s: "9", t: "Start creating safely", d: "Write, shoot or edit for fun. Ask your parents before posting online and never share personal details." },
+      { s: "10", t: "Choose a stream you enjoy", d: "Any stream works. Arts is common for journalism." },
+      { s: "11", t: "Build a small body of work", d: "Create a few pieces: articles, edited videos or photos. Learn basic editing tools." },
+      { s: "12", t: "Choose a media degree (optional)", d: "Options include BA in Journalism and Mass Communication (BJMC). Some institutes such as IIMC have their own entrance exams. Check official notifications." },
+      { s: "college", t: "Learn, intern and build a portfolio", d: "Study media basics and get internships at newspapers, studios or agencies." },
+      { s: "work", t: "Work, freelance or build your channel", d: "Options: media jobs, agency roles, freelance work, or your own channel or brand." }
+    ],
+    subjects: ["English or Hindi", "Any stream"],
+    skills: ["Storytelling", "Writing", "Video or photo editing", "Consistency", "Understanding an audience"],
+    exams: [
+      { name: "IIMC entrance", body: "Indian Institute of Mass Communication", note: "For postgraduate media programmes." },
+      { name: "CUET / college tests", body: "NTA / colleges", note: "For BJMC and mass communication courses." }
+    ],
+    courses: [
+      { name: "BJMC / BA Mass Communication", duration: "3 years" },
+      { name: "Diploma or PG in Journalism / Film / Media", duration: "1 to 2 years" }
+    ],
+    cost: {
+      govt: "Public universities are affordable.",
+      private: "Private media schools vary a lot.",
+      note: "Approximate. You can start with free tools and a phone."
+    },
+    roles: [
+      { title: "Journalist / Reporter", pay: "Varies by outlet" },
+      { title: "Video editor / Filmmaker", pay: "Varies; often project-based" },
+      { title: "Content writer / Social media manager", pay: "Varies" },
+      { title: "Independent creator", pay: "Not fixed; depends on audience and brand deals" }
+    ],
+    salaryNote: "Creator income is uncertain and can take a long time to build. Nobody can promise earnings. Do not pay anyone who guarantees followers or income.",
+    faqs: [
+      { q: "Can I earn quickly as a creator?", a: "Rarely. Most creators take a long time to build an audience, and many never earn much from it. Treat it as skill-building first." },
+      { q: "Is it safe for teenagers to post online?", a: "Only with parent or guardian permission. Never share personal details, location or school information." },
+      { q: "Do I need a media degree?", a: "It helps for journalism and traditional media. For creators, your skills and consistency matter more." }
+    ],
+    checklist: [
+      "Talk to a parent or guardian before posting publicly",
+      "Choose one format to practise (writing, video or photos)",
+      "Publish or save 10 pieces of work",
+      "Learn basic editing",
+      "Avoid anyone selling fake followers or guaranteed income"
+    ],
+    sources: [
+      { label: "IIMC", url: "https://iimc.gov.in" }
+    ],
+    tags: { create: 3, write: 2, people: 1 }
+  }
+];
+
+</script>
+  <script>
+/* Careerix shared code: class choice, header, footer */
+(function () {
+  var CLASSES = [
+    { k: "9", label: "Class 9", short: "9" },
+    { k: "10", label: "Class 10", short: "10" },
+    { k: "11", label: "Class 11", short: "11" },
+    { k: "12", label: "Class 12", short: "12" },
+    { k: "college", label: "College", short: "Col." }
+  ];
+  var STAGE_ORDER = ["9", "10", "11", "12", "college", "work"];
+  var KEY = "careerix.class";
+
+  function getClass() {
+    try { return localStorage.getItem(KEY) || ""; } catch (e) { return ""; }
+  }
+  function setClass(k) {
+    try { localStorage.setItem(KEY, k); } catch (e) {}
+    updatePill();
+    document.dispatchEvent(new CustomEvent("classchange", { detail: k }));
+  }
+  function classLabel(k) {
+    for (var i = 0; i < CLASSES.length; i++) if (CLASSES[i].k === k) return CLASSES[i].label;
+    return "";
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function updatePill() {
+    var pill = document.getElementById("classPill");
+    if (!pill) return;
+    var k = getClass();
+    pill.textContent = k ? classLabel(k) + " ▾" : "Choose class ▾";
+    var dlgBtns = document.querySelectorAll("#classDialog .dlg-opts button");
+    dlgBtns.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.k === k)); });
+  }
+
+  function openClassDialog() {
+    var dlg = document.getElementById("classDialog");
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+  }
+
+  function buildChrome() {
+    var page = document.body.getAttribute("data-page") || "";
+    var header = document.getElementById("site-header");
+    if (header) {
+      header.className = "site-header";
+      header.innerHTML =
+        '<div class="wrap">' +
+        '<a class="logo" href="index.html" aria-label="Careerix home">' +
+        '<svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><circle cx="6" cy="22" r="4" fill="#f2b01e"/><path d="M6 22 C6 10, 24 20, 24 8" stroke="#5fd0cf" stroke-width="3" fill="none" stroke-linecap="round"/><circle cx="24" cy="8" r="4" fill="#fff"/></svg>' +
+        'Careerix</a>' +
+        '<nav class="nav" aria-label="Main">' +
+        '<a href="careers.html"' + (page === "careers" ? ' aria-current="page"' : "") + '>Careers</a>' +
+        '<a href="quiz.html"' + (page === "quiz" ? ' aria-current="page"' : "") + '>Quiz</a>' +
+        '<a href="about.html"' + (page === "about" ? ' aria-current="page"' : "") + '>About</a>' +
+        '<button class="class-pill" id="classPill" type="button" aria-haspopup="dialog">Choose class ▾</button>' +
+        '</nav></div>';
+    }
+
+    var footer = document.getElementById("site-footer");
+    if (footer) {
+      footer.className = "site-footer";
+      footer.innerHTML =
+        '<div class="wrap">' +
+        '<p><strong>Careerix</strong> is a free guide for students. Information is approximate and can change. ' +
+        'Always confirm dates, fees and eligibility on the official website of the exam or college before you decide or pay anything.</p>' +
+        '<p>We never promise jobs, ranks or income. <a href="about.html">Read how we keep this safe</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a>.</p>' +
+        '</div>';
+    }
+
+    var dlg = document.createElement("dialog");
+    dlg.id = "classDialog";
+    dlg.setAttribute("aria-labelledby", "dlgTitle");
+    var opts = CLASSES.map(function (c) {
+      return '<button type="button" data-k="' + c.k + '" aria-pressed="false">' + c.label + "</button>";
+    }).join("");
+    dlg.innerHTML =
+      '<h2 id="dlgTitle">Which class are you in?</h2>' +
+      '<p class="muted">We will show only the steps that are still ahead of you.</p>' +
+      '<div class="dlg-opts">' + opts + "</div>" +
+      '<button class="btn btn-ghost" type="button" id="dlgClose">Close</button>';
+    document.body.appendChild(dlg);
+
+    dlg.querySelectorAll(".dlg-opts button").forEach(function (b) {
+      b.addEventListener("click", function () {
+        setClass(b.dataset.k);
+        if (dlg.close) dlg.close(); else dlg.removeAttribute("open");
+      });
+    });
+    document.getElementById("dlgClose").addEventListener("click", function () {
+      if (dlg.close) dlg.close(); else dlg.removeAttribute("open");
+    });
+    var pill = document.getElementById("classPill");
+    if (pill) pill.addEventListener("click", openClassDialog);
+    updatePill();
+  }
+
+  window.Careerix = {
+    CLASSES: CLASSES,
+    STAGE_ORDER: STAGE_ORDER,
+    getClass: getClass,
+    setClass: setClass,
+    classLabel: classLabel,
+    openClassDialog: openClassDialog,
+    esc: esc,
+    byId: function (id) {
+      var list = window.CAREERS || [];
+      for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+      return null;
+    }
+  };
+
+  document.addEventListener("DOMContentLoaded", buildChrome);
+})();
+
+</script>
+  <script>
+/* Career quiz: rule-based, no AI or internet needed */
+(function () {
+  var C = window.Careerix;
+  var e = C.esc;
+
+  var QUESTIONS = [
+    { q: "Which school subject do you enjoy most?", o: [
+      ["Biology and the human body", ["bio"]],
+      ["Maths and puzzles", ["maths"]],
+      ["Computers and technology", ["tech"]],
+      ["Art, drawing or design", ["create"]] ] },
+    { q: "It is a free weekend. What would you like to do?", o: [
+      ["Build or code something", ["tech", "maths"]],
+      ["Make videos, draw or write stories", ["create", "write"]],
+      ["Help or teach a friend", ["people", "teach"]],
+      ["Try a small money idea, like a stall", ["business", "finance"]] ] },
+    { q: "Which job task sounds best?", o: [
+      ["Solving a hard problem with numbers", ["maths", "finance"]],
+      ["Helping people feel better", ["people", "service", "bio"]],
+      ["Making something look great", ["create"]],
+      ["Leading a team to reach a goal", ["business", "people"]] ] },
+    { q: "What matters most in your future job?", o: [
+      ["Serving society", ["service"]],
+      ["Good earning and growth", ["business", "finance"]],
+      ["Creative freedom", ["create"]],
+      ["Stability and respect", ["service", "teach"]] ] },
+    { q: "How do you feel about fitness and discipline?", o: [
+      ["I love it. A uniform job sounds exciting", ["physical", "service"]],
+      ["Fitness is good, but not my career", []],
+      ["I prefer desk or screen work", ["tech"]] ] },
+    { q: "Which sounds most like you?", o: [
+      ["I like arguing a point and writing it clearly", ["law", "write"]],
+      ["I like explaining things so others understand", ["teach", "people"]],
+      ["I like finding out why things happen", ["research"]],
+      ["I like making things work", ["tech"]] ] },
+    { q: "How long can you study for a big goal?", o: [
+      ["Many years, if the goal is big", ["bio", "law", "research"]],
+      ["A few years", ["maths", "finance"]],
+      ["I would rather start working sooner", ["tech", "create", "business"]] ] },
+    { q: "What do you like reading or watching?", o: [
+      ["Science, health and nature", ["bio", "research"]],
+      ["Tech, gadgets and coding", ["tech"]],
+      ["News and current affairs", ["service", "law", "write"]],
+      ["Business, money and startups", ["business", "finance"]] ] },
+    { q: "In a group project, you usually...", o: [
+      ["Plan and lead", ["business", "people"]],
+      ["Do the research", ["research", "write"]],
+      ["Design or present", ["create", "people"]],
+      ["Build or calculate", ["tech", "maths"]] ] },
+    { q: "Which describes your energy best?", o: [
+      ["Calm and patient with people", ["people", "teach", "bio"]],
+      ["Competitive and driven", ["business", "physical"]],
+      ["Curious and quiet", ["research", "maths"]],
+      ["Creative and expressive", ["create", "write"]] ] }
+  ];
+
+  var state = { i: 0, picks: [] };
+  var root;
+
+  function classPrompt() {
+    root.innerHTML =
+      '<div class="quiz-card"><h2>First, which class are you in?</h2>' +
+      '<p class="muted">Your results will show steps that fit your class.</p><div class="opts">' +
+      C.CLASSES.map(function (c) { return '<button class="opt" type="button" data-k="' + c.k + '">' + e(c.label) + "</button>"; }).join("") +
+      "</div></div>";
+    root.querySelectorAll(".opt").forEach(function (b) {
+      b.addEventListener("click", function () { C.setClass(b.dataset.k); });
+    });
+  }
+
+  function showQuestion() {
+    var q = QUESTIONS[state.i];
+    root.innerHTML =
+      '<div class="quiz-card">' +
+      '<div class="quiz-progress">Question ' + (state.i + 1) + " of " + QUESTIONS.length + "</div>" +
+      '<div class="progress" aria-hidden="true"><div style="width:' + Math.round((state.i / QUESTIONS.length) * 100) + '%"></div></div>' +
+      "<h2>" + e(q.q) + "</h2>" +
+      '<div class="opts">' +
+      q.o.map(function (o, idx) { return '<button class="opt" type="button" data-i="' + idx + '">' + e(o[0]) + "</button>"; }).join("") +
+      "</div>" +
+      (state.i > 0 ? '<div class="btn-row"><button class="btn btn-ghost" type="button" id="back">Back</button></div>' : "") +
+      "</div>";
+    root.querySelectorAll(".opt").forEach(function (b) {
+      b.addEventListener("click", function () {
+        state.picks[state.i] = Number(b.dataset.i);
+        if (state.i < QUESTIONS.length - 1) { state.i++; showQuestion(); } else { showResults(); }
+      });
+    });
+    var back = document.getElementById("back");
+    if (back) back.addEventListener("click", function () { state.i--; showQuestion(); });
+  }
+
+  function score() {
+    var counts = {};
+    state.picks.forEach(function (pick, qi) {
+      QUESTIONS[qi].o[pick][1].forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
+    });
+    return (window.CAREERS || []).map(function (c) {
+      var s = 0;
+      Object.keys(c.tags).forEach(function (t) { s += (counts[t] || 0) * c.tags[t]; });
+      return { c: c, s: s };
+    }).sort(function (a, b) { return b.s - a.s; }).filter(function (x) { return x.s > 0; }).slice(0, 3);
+  }
+
+  function nextStepLine(c) {
+    var k = C.getClass();
+    if (k === "9" || k === "10") return "<br><strong>Stream to look at after Class 10:</strong> " + e(c.streamNote);
+    if (k === "11" || k === "12") {
+      var names = c.exams.slice(0, 2).map(function (x) { return x.name; }).join(", ");
+      return "<br><strong>Exams to look at:</strong> " + e(names);
+    }
+    if (k === "college") {
+      var cs = c.courses.slice(0, 2).map(function (x) { return x.name; }).join(", ");
+      return "<br><strong>Courses to look at:</strong> " + e(cs);
+    }
+    return "";
+  }
+
+  function showResults() {
+    var top = score();
+    var labels = ["Strong match", "Good match", "Worth exploring"];
+    root.innerHTML =
+      '<div class="quiz-card"><h2>Your top matches</h2>' +
+      '<p class="muted">Based on what you enjoy. This is a starting point, not a verdict. Explore the roadmaps and talk to a parent, teacher or counsellor.</p>' +
+      '<div class="result">' +
+      top.map(function (x, i) {
+        var extra = '<p>' + nextStepLine(x.c) + "</p>";
+        return '<div class="card ' + (i === 0 ? "strong" : "") + '">' +
+          '<span class="badge">' + labels[i] + "</span>" +
+          "<h3>" + e(x.c.name) + "</h3>" +
+          "<p>" + e(x.c.tagline) + "</p>" + extra +
+          '<div class="btn-row"><a class="btn btn-primary" href="career.html?id=' + encodeURIComponent(x.c.id) + '">See roadmap</a></div>' +
+          "</div>";
+      }).join("") +
+      "</div>" +
+      '<div class="btn-row"><button class="btn btn-ghost" type="button" id="again">Retake quiz</button>' +
+      '<a class="btn btn-ghost" href="careers.html">Browse all careers</a></div></div>';
+    document.getElementById("again").addEventListener("click", start);
+  }
+
+  function start() {
+    state = { i: 0, picks: [] };
+    if (!C.getClass()) classPrompt(); else showQuestion();
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    root = document.getElementById("quiz");
+    start();
+  });
+  document.addEventListener("classchange", function () {
+    if (state.i === 0 && state.picks.length === 0) start();
+  });
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://careerix.me/index.html</loc><priority>1.0</priority></url>
+  <url><loc>https://careerix.me/careers.html</loc><priority>0.9</priority></url>
+  <url><loc>https://careerix.me/quiz.html</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/about.html</loc><priority>0.5</priority></url>
+  <url><loc>https://careerix.me/privacy.html</loc><priority>0.3</priority></url>
+  <url><loc>https://careerix.me/career.html?id=doctor</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=engineer</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=software-developer</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=ca-finance</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=lawyer</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=teacher</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=government-jobs</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=defence-nda</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=designer</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=data-science-ai</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=business-mba</loc><priority>0.8</priority></url>
+  <url><loc>https://careerix.me/career.html?id=content-creator-media</loc><priority>0.8</priority></url>
+</urlset>
