@@ -20,43 +20,27 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Terms of Use | Careerix</title>
-  <meta name="description" content="Terms for using the Careerix website.">
+  <title>Student Earning Hub | Careerix</title>
+  <meta name="description" content="Safe, age-appropriate ways for students to earn: freelancing, content creation, coding, design, tutoring and more.">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Ccircle cx='6' cy='22' r='4' fill='%23f2b01e'/%3E%3Cpath d='M6 22 C6 10, 24 20, 24 8' stroke='%230e7c7b' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='24' cy='8' r='4' fill='%2315233b'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-page="terms">
+<body data-page="earning">
   <div id="site-header"></div>
 
   <main class="section">
     <div class="wrap">
-      <h1>Terms of Use</h1>
-      <p class="muted">Last updated: September 2026</p>
+      <h1>Student Earning Hub</h1>
+      <p class="muted">Safe, realistic ways students can start earning or building skills. No guaranteed income, no shortcuts — just honest starting points.</p>
 
-      <h2>Using this site</h2>
-      <p>Careerix is a free information website for students. By using this site, you agree to use it only for personal, non-commercial learning purposes.</p>
+      <div class="note alert">
+        <p><strong>Read this first:</strong> Nobody can guarantee you income online. Be very cautious of anyone who asks you to pay money upfront for "training", "registration" or a "starter kit". If you are under 18, involve a parent or guardian in any earning activity, especially anything involving payments, online strangers, or posting your face or location publicly.</p>
+      </div>
 
-      <h2>Information is not advice</h2>
-      <p>Content on Careerix is for general guidance only. It is not professional career, legal, financial or educational counselling. Exam rules, fees, ages and eligibility change often. Always confirm details on the official website of the relevant exam, college or government body before making a decision or paying any money.</p>
-
-      <h2>No guarantees</h2>
-      <p>We do not guarantee admission, a job, a rank, an income, or any specific outcome from following information on this site. Salary and cost figures shown are rough estimates, not promises.</p>
-
-      <h2>External links</h2>
-      <p>This site links to official third-party websites (such as NTA, NMC, UPSC, ICAI and others) for your convenience. We do not control these sites and are not responsible for their content or availability.</p>
-
-      <h2>Advertising</h2>
-      <p>This site may show advertisements to help keep it free. See our <a href="privacy.html">Privacy Policy</a> for details on how ads and cookies work here.</p>
-
-      <h2>Content ownership</h2>
-      <p>The text, design and layout of Careerix belong to the site owner unless stated otherwise. You may share links to this site freely. Please do not copy large parts of the content onto another website without permission.</p>
-
-      <h2>Changes</h2>
-      <p>We may update these terms as the site grows. Continuing to use the site after changes means you accept the updated terms.</p>
-
-      <h2>Contact</h2>
-      <p>For questions about these terms, see the contact details on the <a href="about.html">About page</a>.</p>
+      <div id="earningList"></div>
     </div>
   </main>
 
@@ -906,6 +890,166 @@ window.CAREERS = [
   };
 
   document.addEventListener("DOMContentLoaded", buildChrome);
+})();
+
+</script>
+  <script>
+/*
+  Careerix Earning Hub data.
+  Age-appropriate, safe earning ideas for students. No guaranteed-income claims.
+*/
+window.EARNING = [
+  {
+    id: "freelancing",
+    name: "Freelancing",
+    tagline: "Sell a skill you already have (writing, data entry, virtual assistance) to clients online.",
+    skill: "Any one skill done well: writing, basic research, data entry, translation, proofreading, virtual assistance.",
+    start: [
+      "Pick one skill you can already do reasonably well.",
+      "Make 2-3 sample pieces of work to show, even if unpaid practice.",
+      "Create a simple profile on a freelancing platform once you are 18 (most platforms require an adult account; younger students should work through a parent's account with their permission and involvement).",
+      "Start with small, clearly-scoped tasks and build reviews slowly."
+    ],
+    resources: ["Upwork and Fiverr (freelance platforms, 18+ or parent-supervised)", "Google Docs / Grammarly (free writing tools)", "YouTube tutorials on freelance basics"],
+    time: "A few hours a week to start; grows with client work.",
+    warnings: ["Never pay an upfront 'registration fee' to a client or agency — legitimate work does not ask for this.", "Avoid clients who refuse to describe the task clearly before you start.", "If you are under 18, do this only with a parent or guardian involved in payments and communication."]
+  },
+  {
+    id: "content-creation",
+    name: "Content Creation",
+    tagline: "Build an audience on YouTube, Instagram or a blog around something you enjoy.",
+    skill: "Consistency, basic phone photography or videography, comfort being on camera or writing.",
+    start: [
+      "Talk to a parent or guardian before posting anything publicly.",
+      "Pick one topic you can talk about for months without getting bored.",
+      "Post consistently (even once a week) rather than posting a lot then stopping.",
+      "Learn one editing app well instead of jumping between many."
+    ],
+    resources: ["CapCut / InShot (free video editing apps)", "Canva (free thumbnails and graphics)", "YouTube Creator Academy (free official course)"],
+    time: "Few hours weekly; income (if any) usually takes months to build.",
+    warnings: ["Never share your school name, home address or exact location publicly.", "Growth is usually slow — treat this as skill-building first, income second.", "Ignore anyone who guarantees viral growth or followers for a fee."]
+  },
+  {
+    id: "coding",
+    name: "Coding & Web Development",
+    tagline: "Learn to build websites or simple apps, then take small paid projects once skilled.",
+    skill: "One programming language (Python or JavaScript is a good start) and basic problem solving.",
+    start: [
+      "Finish one free beginner course fully rather than sampling many.",
+      "Build 3-4 small real projects (a personal website, a to-do app, a simple game).",
+      "Put your projects on GitHub with a short description of what each does.",
+      "Once confident, look at small freelance web tasks or help a local shop/school with a simple website."
+    ],
+    resources: ["freeCodeCamp (free structured courses)", "MDN Web Docs (free reference)", "GitHub (free project hosting)"],
+    time: "3-6 months of regular practice before taking paid work.",
+    warnings: ["Never share client passwords or payment details insecurely.", "Avoid 'coding bootcamps' that promise guaranteed high-paying jobs for a large upfront fee."]
+  },
+  {
+    id: "design",
+    name: "Graphic Design",
+    tagline: "Make logos, posters, social media graphics or presentations for people and small businesses.",
+    skill: "An eye for colour and layout; comfort with one design tool.",
+    start: [
+      "Learn Canva or Figma using their free plans.",
+      "Redesign 5 existing posters or logos as practice, and note what you changed and why.",
+      "Build a small portfolio of your best 5-8 pieces.",
+      "Offer to design something small (a poster, a logo) for a school club or local shop for practice, then move to paid work."
+    ],
+    resources: ["Canva (free design tool)", "Figma (free for individuals)", "Unsplash / Pexels (free stock images)"],
+    time: "Few hours a week to build skills before taking paid projects.",
+    warnings: ["Agree on the design and price before starting paid work, in writing (even a text message).", "Watch for 'design contests' that expect many free submissions with only one small prize."]
+  },
+  {
+    id: "video-editing",
+    name: "Video Editing",
+    tagline: "Edit videos for creators, small businesses or your own channel.",
+    skill: "Patience, attention to detail, and comfort with one editing app.",
+    start: [
+      "Learn one free editing app deeply (cuts, transitions, captions, basic colour).",
+      "Practise by re-editing existing public videos as a personal exercise (not for posting/reselling).",
+      "Offer to edit a video for a friend, teacher or local creator for free or low cost to build a portfolio.",
+      "Share 2-3 before/after examples when looking for paid work."
+    ],
+    resources: ["CapCut / DaVinci Resolve (free editing tools)", "YouTube tutorials on editing basics"],
+    time: "A few hours per video; speed improves with practice.",
+    warnings: ["Never accept a large upfront project from an unknown client without a clear brief and partial payment first.", "Back up your work before sending files to avoid losing your own copy."]
+  },
+  {
+    id: "tutoring",
+    name: "Online Tutoring",
+    tagline: "Teach a subject you're strong in to younger students, one-on-one or in small groups.",
+    skill: "Strong grasp of a school subject and patience to explain it simply.",
+    start: [
+      "Pick a subject where you consistently score well.",
+      "Practise explaining a topic clearly to a sibling, cousin or friend first.",
+      "If under 18, tutor only with a parent or guardian aware of the arrangement, sessions and any payment.",
+      "Start with people you or your family already know before tutoring strangers online."
+    ],
+    resources: ["Khan Academy (free content to reference)", "Google Meet / Zoom (free video calls)"],
+    time: "1-2 hours per session, flexible scheduling.",
+    warnings: ["A parent or guardian should be aware of who you are tutoring and any online sessions, especially with people you don't know personally.", "Never share personal contact details beyond what's needed for the session."]
+  },
+  {
+    id: "writing",
+    name: "Content Writing & Blogging",
+    tagline: "Write articles, blog posts or website copy for others, or start your own blog.",
+    skill: "Clear writing, basic research, and comfort with feedback and edits.",
+    start: [
+      "Write regularly on a topic you know well, even if just for practice.",
+      "Study 2-3 well-written articles in a niche you like and note their structure.",
+      "Build a small portfolio of 4-5 sample pieces before looking for paid writing work.",
+      "Start with shorter, well-scoped writing tasks rather than long complex ones."
+    ],
+    resources: ["Grammarly (free writing checks)", "Google Docs (free writing and sharing)", "Medium / a free blog platform to publish practice pieces"],
+    time: "Few hours per piece; speed and pay improve with a portfolio.",
+    warnings: ["Confirm topic, word count and payment before starting any paid writing task.", "Avoid 'content mills' that pay extremely little per word with no room to grow."]
+  },
+  {
+    id: "digital-products",
+    name: "Digital Products",
+    tagline: "Create and sell templates, printables, presets or small guides once you have a skill to package.",
+    skill: "A specific skill worth packaging: design templates, study notes, presets, planners.",
+    start: [
+      "Notice what people already ask you for help with (notes, templates, designs).",
+      "Package one useful thing well (a clean template or a short guide) rather than many rough ones.",
+      "Get feedback from friends or classmates before trying to sell anything.",
+      "If selling for money as a minor, do this with a parent or guardian's involvement for payments and any legal basics."
+    ],
+    resources: ["Canva (for templates)", "Google Slides / Docs (for guides and planners)"],
+    time: "Upfront time to create the product, then ongoing updates based on feedback.",
+    warnings: ["Never copy someone else's paid product and resell it as your own — that's a copyright issue, not just unfair.", "Be cautious of platforms that ask for money to 'list' your product before you've sold anything."]
+  }
+];
+
+</script>
+  <script>
+/* Student Earning Hub: renders accordion cards from window.EARNING */
+(function () {
+  var e = window.Careerix.esc;
+
+  function list(items) {
+    return "<ul>" + items.map(function (x) { return "<li>" + e(x) + "</li>"; }).join("") + "</ul>";
+  }
+
+  function card(x) {
+    return (
+      '<details class="faq earning-card">' +
+      "<summary><strong>" + e(x.name) + "</strong> — " + e(x.tagline) + "</summary>" +
+      '<div class="earning-body">' +
+      "<h3>Skill needed</h3><p>" + e(x.skill) + "</p>" +
+      "<h3>How to start</h3>" + list(x.start) +
+      "<h3>Free resources</h3>" + list(x.resources) +
+      "<h3>Time commitment</h3><p>" + e(x.time) + "</p>" +
+      '<div class="note alert"><p><strong>Stay safe:</strong></p>' + list(x.warnings) + "</div>" +
+      "</div></details>"
+    );
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var root = document.getElementById("earningList");
+    if (!root) return;
+    root.innerHTML = (window.EARNING || []).map(card).join("");
+  });
 })();
 
 </script>

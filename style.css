@@ -154,6 +154,14 @@ details.faq { background: #fff; border: 1px solid var(--line); border-radius: 12
 details.faq summary { cursor: pointer; font-weight: 700; }
 details.faq p { margin: 10px 0 0; color: var(--ink-soft); }
 
+.earning-card summary { font-size: 1.02rem; }
+.earning-body { margin-top: 12px; }
+.earning-body h3 { font-size: .95rem; text-transform: uppercase; letter-spacing: .03em; color: var(--route-dark); margin: 14px 0 4px; }
+.earning-body h3:first-child { margin-top: 4px; }
+.earning-body ul { margin: 0 0 4px; padding-left: 20px; }
+.earning-body li { margin-bottom: 4px; }
+.earning-body .note { margin-top: 12px; }
+
 .check { display: flex; gap: 10px; align-items: flex-start; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; }
 .check input { width: 22px; height: 22px; margin-top: 2px; accent-color: var(--route); flex: none; }
 .check.done span { text-decoration: line-through; color: var(--ink-soft); }
