@@ -1,8 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="google-site-verification" content="pgcPtvPe8wboUWy4FonGk49oxaHqmCwMqP8wlRzvu7o" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-3VFRKDKVZB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-3VFRKDKVZB');
+  </script>
   <meta charset="utf-8">
-  <meta name="google-site-verification" content="pgcPtvPe8wboUWy4FonGk49oxaHqmCwMqP8wlRzvu7o">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Careerix: Career roadmaps for students</title>
   <meta name="description" content="Pick your class and see the road ahead: exams, courses, costs and steps for popular careers in India.">
@@ -11,15 +19,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-3VFRKDKVZB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-3VFRKDKVZB');
-</script>
 </head>
 <body data-page="home">
   <div id="site-header"></div>
@@ -981,21 +980,36 @@ window.CAREERS = [
 })();
 
 </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
 /* Simple 3D hero animation: a slowly spinning path of glowing nodes,
-   built with Three.js loaded from CDN. Falls back to nothing if it fails to load
-   or if the person prefers reduced motion. */
+   built with Three.js. Three.js itself is loaded only when needed (not on
+   reduced-motion devices, and not blocking the rest of the page), so the
+   page stays fast for everyone and skips the download entirely when the
+   animation would not run anyway. */
 (function () {
   function reduceMotion() {
     return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
+  function loadThree(cb) {
+    if (window.THREE) { cb(); return; }
+    var s = document.createElement("script");
+    s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+    s.async = true;
+    s.onload = cb;
+    s.onerror = function () {}; // fail silently, hero area just stays empty
+    document.head.appendChild(s);
+  }
+
   function start() {
     var host = document.getElementById("hero3d");
-    if (!host || typeof THREE === "undefined") return;
+    if (!host) return;
     if (reduceMotion()) { host.style.display = "none"; return; }
+    loadThree(function () { render(host); });
+  }
 
+  function render(host) {
+    if (typeof THREE === "undefined") return;
     var width = host.clientWidth || 320;
     var height = host.clientHeight || 320;
 
