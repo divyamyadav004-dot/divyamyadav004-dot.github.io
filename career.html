@@ -1364,6 +1364,28 @@ window.CAREER_EXTRA = {
     refresh();
   }
 
+  function injectFaqSchema(c) {
+    var old = document.getElementById("faqSchema");
+    if (old) old.remove();
+    if (!c.faqs || !c.faqs.length) return;
+    var schema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": c.faqs.map(function (f) {
+        return {
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        };
+      })
+    };
+    var s = document.createElement("script");
+    s.type = "application/ld+json";
+    s.id = "faqSchema";
+    s.textContent = JSON.stringify(schema);
+    document.head.appendChild(s);
+  }
+
   function render() {
     var params = new URLSearchParams(location.search);
     var c = C.byId(params.get("id"));
@@ -1444,6 +1466,7 @@ window.CAREER_EXTRA = {
       "</div>";
 
     wireChecklist(c);
+    injectFaqSchema(c);
     var btn = document.getElementById("changeClass");
     if (btn) btn.addEventListener("click", C.openClassDialog);
   }
