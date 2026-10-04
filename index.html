@@ -32,43 +32,107 @@
   <div id="site-header"></div>
 
   <main>
-    <section class="hero">
+    <section class="hero hero-premium">
       <div class="wrap">
       <div class="hero-grid">
-        <div>
-        <h1>Pick your class.<br>See the road ahead.</h1>
-        <p class="lead">Careerix shows the steps from where you are today to the career you want: subjects, exams, courses, costs and what to do next.</p>
+        <div class="hero-copy">
+        <p class="eyebrow">Trusted student career guidance</p>
+        <h1>Plan your future with clarity,<br>not confusion.</h1>
+        <p class="lead">Careerix helps students choose smarter paths with clear exam routes, course timelines, expected costs and practical next steps for each career option.</p>
 
         <ul class="route" id="route" aria-label="Choose your class"></ul>
         <p class="route-msg" id="routeMsg" role="status"></p>
 
+        <ul class="hero-points">
+          <li>Built for Class 9 to college students in India</li>
+          <li>Straightforward guidance designed for mobile reading</li>
+          <li>Always encourages verification from official sources</li>
+        </ul>
+
         <div class="btn-row">
-          <a class="btn btn-primary" href="careers.html">Explore careers</a>
-          <a class="btn btn-ghost" href="quiz.html">Take the career quiz</a>
+          <a class="btn btn-primary" href="careers.html">Start career exploration</a>
+          <a class="btn btn-ghost" href="quiz.html">Take the career fit quiz</a>
           <a class="btn btn-ghost" href="earning.html">Student Earning Hub</a>
         </div>
+        <div class="hero-stats" aria-label="Careerix highlights">
+          <div class="panel">
+            <span class="num">Step-by-step</span>
+            <span class="lbl">Roadmaps from your current class</span>
+          </div>
+          <div class="panel">
+            <span class="num">Student-first</span>
+            <span class="lbl">Simple language with practical next actions</span>
+          </div>
         </div>
-        <div id="hero3d" class="hero3d" aria-hidden="true"></div>
+        </div>
+        <div id="hero3d" class="hero3d hero-art" aria-hidden="true"></div>
       </div>
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section-soft">
       <div class="wrap">
-        <h2>How it works</h2>
+        <h2 class="section-title">Career guidance that feels practical and reliable</h2>
+        <p class="section-intro">Everything is structured to help students make informed decisions without hype: understand your path, compare options and take your next step with confidence.</p>
         <ol class="steps">
           <li><strong>Choose your class</strong>We hide steps you have already passed.</li>
           <li><strong>Explore or take the quiz</strong>Browse careers or answer a few questions about what you enjoy.</li>
           <li><strong>Follow the roadmap</strong>See exams, courses, costs and a checklist for your next steps.</li>
         </ol>
+        <div class="feature-grid" style="margin-top:16px">
+          <article class="feature-card">
+            <h3>Career guidance</h3>
+            <p>Understand eligibility, exams and timelines before selecting your stream or degree.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Career exploration</h3>
+            <p>Compare multiple career tracks quickly so you can shortlist realistic options.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Quiz and tools</h3>
+            <p>Use interactive tools to discover interests and plan your next academic moves.</p>
+          </article>
+        </div>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
-        <h2>Popular careers</h2>
+        <h2 class="section-title">Explore popular career options</h2>
+        <p class="section-intro">Browse trusted starter roadmaps and then open full details for exams, courses, fees and preparation steps.</p>
         <div class="grid" id="featured"></div>
         <div class="btn-row"><a class="btn btn-ghost" href="careers.html">See all careers</a></div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <h2 class="section-title">Quick access to key tools</h2>
+        <div class="quick-links" style="margin-bottom:18px">
+          <a class="quick-link-card" href="careers.html">
+            <span class="tag">Career library</span>
+            <strong>Browse all careers</strong>
+            <span>View complete career paths across streams.</span>
+          </a>
+          <a class="quick-link-card" href="quiz.html">
+            <span class="tag">Career quiz</span>
+            <strong>Find likely matches</strong>
+            <span>Get exploratory suggestions based on your interests.</span>
+          </a>
+          <a class="quick-link-card" href="earning.html">
+            <span class="tag">Student tools</span>
+            <strong>Use the Earning Hub</strong>
+            <span>Explore safe earning ideas while studying.</span>
+          </a>
+        </div>
+        <div class="cta-band">
+          <h2>Start now. Improve every decision you make after Class 10 and 12.</h2>
+          <p>Careerix is your starting point for planning. Always verify the final details directly on official exam and institute websites.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="careers.html">Explore careers</a>
+            <a class="btn btn-ghost" href="about.html">About Careerix</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -869,6 +933,7 @@ window.CAREERS = [
         '<a href="earning.html"' + (page === "earning" ? ' aria-current="page"' : "") + '>Earning Hub</a>' +
         '<a href="quiz.html"' + (page === "quiz" ? ' aria-current="page"' : "") + '>Quiz</a>' +
         '<a href="about.html"' + (page === "about" ? ' aria-current="page"' : "") + '>About</a>' +
+        '<a href="contact.html"' + (page === "contact" ? ' aria-current="page"' : "") + '>Contact</a>' +
         '<button class="class-pill" id="classPill" type="button" aria-haspopup="dialog">Choose class ▾</button>' +
         '</nav></div>';
     }
@@ -878,9 +943,16 @@ window.CAREERS = [
       footer.className = "site-footer";
       footer.innerHTML =
         '<div class="wrap">' +
-        '<p><strong>Careerix</strong> is a free guide for students. Information is approximate and can change. ' +
+        '<p><strong>Careerix</strong> is a free career guidance platform for students. Information is approximate and can change. ' +
         'Always confirm dates, fees and eligibility on the official website of the exam or college before you decide or pay anything.</p>' +
-        '<p>We never promise jobs, ranks or income. <a href="about.html">Read how we keep this safe</a> · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Use</a>.</p>' +
+        '<p>We never promise admission, jobs, ranks or income. Read more and contact us through the links below.</p>' +
+        '<ul class="site-footer-links">' +
+        '<li><a href="about.html">About</a></li>' +
+        '<li><a href="contact.html">Contact</a></li>' +
+        '<li><a href="privacy.html">Privacy</a></li>' +
+        '<li><a href="terms.html">Terms</a></li>' +
+        '<li><a href="disclaimer.html">Disclaimer</a></li>' +
+        '</ul>' +
         '</div>';
     }
 
