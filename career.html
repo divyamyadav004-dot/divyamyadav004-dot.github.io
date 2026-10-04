@@ -23,6 +23,7 @@
   <title>Career roadmap | Careerix</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Ccircle cx=%276%27 cy=%2722%27 r=%274%27 fill=%27%23f2b01e%27/%3E%3Cpath d=%27M6 22 C6 10, 24 20, 24 8%27 stroke=%27%230e7c7b%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%2724%27 cy=%278%27 r=%274%27 fill=%27%2315233b%27/%3E%3C/svg%3E">
   <meta name="description" content="Step by step career roadmap with exams, courses, costs and a checklist.">
+  <link rel="canonical" href="https://careerix.me/career.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
@@ -1227,6 +1228,80 @@ window.CAREER_EXTRA = {
     "college": "College years",
     "work": "After college"
   };
+  var GUIDE_BY_ID = {
+    "doctor": {
+      who: ["Students who care about helping people", "Learners who can stay consistent for long preparation cycles", "Students comfortable with biology-heavy study"],
+      explore: ["Speak to a doctor or medical student about daily reality", "Join school health awareness or science activities", "Read the NEET bulletin before paying for coaching"],
+      specializations: ["General Medicine", "Surgery", "Pediatrics", "Radiology", "Psychiatry", "Dermatology"],
+      related: ["teacher", "government-jobs", "data-science-ai"]
+    },
+    "engineer": {
+      who: ["Students who enjoy Maths and practical problem solving", "Learners curious about how products and systems work", "Students willing to learn by projects, not only theory"],
+      explore: ["Build one mini project each month", "Compare engineering branches before choosing", "Read JEE and state exam official notifications directly"],
+      specializations: ["Computer Science", "Mechanical", "Civil", "Electrical", "Electronics", "Chemical"],
+      related: ["software-developer", "data-science-ai", "designer"]
+    },
+    "software-developer": {
+      who: ["Students who enjoy coding and debugging", "Learners ready for continuous upskilling", "Students who like building digital products"],
+      explore: ["Publish 3 beginner projects on GitHub", "Join coding communities or hackathons", "Practice reading documentation and solving bugs"],
+      specializations: ["Frontend", "Backend", "Mobile Apps", "Cloud", "Cybersecurity", "AI/ML"],
+      related: ["engineer", "data-science-ai", "designer"]
+    },
+    "ca-finance": {
+      who: ["Students comfortable with accountancy and numbers", "Learners who can follow long exam timelines", "Students interested in tax, audit, and compliance"],
+      explore: ["Learn practical Excel basics for accounting", "Track one company annual report summary", "Review ICAI official student guidance before enrollment"],
+      specializations: ["Audit", "Taxation", "Corporate Finance", "Forensic Accounting", "Risk and Compliance"],
+      related: ["business-management", "government-jobs", "lawyer"]
+    },
+    "lawyer": {
+      who: ["Students who enjoy reading, writing, and argument building", "Learners interested in justice and public systems", "Students willing to improve communication consistently"],
+      explore: ["Read legal current affairs weekly", "Practice debate or public speaking", "Check CLAT/AILET official syllabi and papers"],
+      specializations: ["Litigation", "Corporate Law", "Criminal Law", "IPR", "Tax Law", "Constitutional Law"],
+      related: ["government-jobs", "teacher", "media-content"]
+    },
+    "teacher": {
+      who: ["Students who enjoy explaining concepts", "Learners with patience and empathy", "Students motivated by long-term impact on others"],
+      explore: ["Tutor juniors in one subject weekly", "Create short topic explainers", "Volunteer in peer-learning activities"],
+      specializations: ["Primary Teaching", "Secondary Subject Teaching", "Special Education", "Higher Education", "Curriculum Design"],
+      related: ["government-jobs", "lawyer", "media-content"]
+    },
+    "government-jobs": {
+      who: ["Students interested in public service roles", "Learners with discipline for long preparation cycles", "Students who can plan backups while preparing"],
+      explore: ["Read one exam syllabus in detail", "Build a daily current affairs note habit", "Choose graduation with both interest and backup value"],
+      specializations: ["Civil Services", "SSC Roles", "Banking Roles", "Railway Roles", "State PSC Roles"],
+      related: ["lawyer", "teacher", "defence-nda"]
+    },
+    "defence-nda": {
+      who: ["Students motivated by service, discipline, and leadership", "Learners willing to maintain consistent physical fitness", "Students comfortable with structured training environments"],
+      explore: ["Start and track a weekly fitness routine", "Read UPSC NDA notification every cycle", "Practice SSB communication and teamwork tasks"],
+      specializations: ["Army Officer Track", "Navy Officer Track", "Air Force Officer Track"],
+      related: ["government-jobs", "engineer", "lawyer"]
+    },
+    "designer": {
+      who: ["Students who enjoy visual problem solving", "Learners open to feedback and iteration", "Students interested in user behavior and aesthetics"],
+      explore: ["Redesign one screen or poster each week", "Build a beginner portfolio in Figma/Canva", "Observe real products to learn usability"],
+      specializations: ["UI/UX", "Product Design", "Graphic and Brand Design", "Fashion Design", "Animation"],
+      related: ["software-developer", "media-content", "engineer"]
+    },
+    "data-science-ai": {
+      who: ["Students strong in Maths and logic", "Learners curious about data patterns", "Students who like combining coding with analysis"],
+      explore: ["Do one small data project monthly", "Practice Python and SQL basics", "Explain charts in simple language to others"],
+      specializations: ["Machine Learning", "NLP", "Computer Vision", "Data Engineering", "Business Analytics", "MLOps"],
+      related: ["software-developer", "engineer", "business-management"]
+    },
+    "business-management": {
+      who: ["Students interested in business decisions and teams", "Learners who enjoy communication and planning", "Students motivated by leadership and entrepreneurship"],
+      explore: ["Run a mini school project with budget tracking", "Read Indian business case studies", "Practice presentations and negotiation basics"],
+      specializations: ["Marketing", "Finance", "Operations", "HR", "Business Analytics", "Entrepreneurship"],
+      related: ["ca-finance", "government-jobs", "media-content"]
+    },
+    "media-content": {
+      who: ["Students who enjoy storytelling and communication", "Learners open to portfolio-based growth", "Students ready for consistent creative output"],
+      explore: ["Create 10 quality pieces in one format", "Practice safe digital publishing habits", "Analyze audience feedback and improve content"],
+      specializations: ["Journalism", "Video Production", "Social Media Strategy", "Content Writing", "Photography", "Public Relations"],
+      related: ["designer", "teacher", "business-management"]
+    }
+  };
 
   function stageIdx(s) { return C.STAGE_ORDER.indexOf(s); }
 
@@ -1266,6 +1341,14 @@ window.CAREER_EXTRA = {
     }
     return '<div class="class-banner"><span>Choose your class to hide steps you have already passed.</span>' +
       '<button type="button" id="changeClass">Choose class</button></div>';
+  }
+
+  function setSeo(c) {
+    document.title = c.name + " roadmap after Class 10 and 12 | Careerix";
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute("content", "Learn what " + c.name + " involves, who it may suit, subjects after Class 10, education and entrance routes, skills, beginner roadmap, FAQs and related careers.");
+    var canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) canonical.setAttribute("href", "https://careerix.me/career.html?id=" + encodeURIComponent(c.id));
   }
 
   function table(headers, rows) {
@@ -1324,6 +1407,36 @@ window.CAREER_EXTRA = {
     if (!c.backup || !c.backup.length) return "";
     return '<section class="block"><h2>Backup options</h2><p class="muted">Good to know in case your first plan does not work out.</p>' +
       tagList(c.backup) + "</section>";
+  }
+
+  function whoHtml(c) {
+    var g = GUIDE_BY_ID[c.id];
+    if (!g || !g.who || !g.who.length) return "";
+    return '<section class="block"><h2>Who this career may suit</h2><ul>' + g.who.map(function (x) { return "<li>" + e(x) + "</li>"; }).join("") + "</ul></section>";
+  }
+
+  function exploreHtml(c) {
+    var g = GUIDE_BY_ID[c.id];
+    if (!g || !g.explore || !g.explore.length) return "";
+    return '<section class="block"><h2>How students can explore this career now</h2><ul>' + g.explore.map(function (x) { return "<li>" + e(x) + "</li>"; }).join("") + "</ul></section>";
+  }
+
+  function specializationsHtml(c) {
+    var g = GUIDE_BY_ID[c.id];
+    if (!g || !g.specializations || !g.specializations.length) return "";
+    return '<section class="block"><h2>Popular specializations</h2>' + tagList(g.specializations) + "</section>";
+  }
+
+  function relatedHtml(c) {
+    var g = GUIDE_BY_ID[c.id];
+    if (!g || !g.related || !g.related.length) return "";
+    var links = g.related.map(function (id) {
+      var item = C.byId(id);
+      if (!item) return "";
+      return '<li><a href="career.html?id=' + encodeURIComponent(item.id) + '">' + e(item.name) + "</a></li>";
+    }).filter(Boolean).join("");
+    if (!links) return "";
+    return '<section class="block"><h2>Related careers</h2><ul>' + links + "</ul></section>";
   }
 
   function checklistHtml(c) {
@@ -1394,7 +1507,7 @@ window.CAREER_EXTRA = {
       root.innerHTML = '<div class="wrap section"><h1>Career not found</h1><p>Go back to <a href="careers.html">all careers</a> and choose one.</p></div>';
       return;
     }
-    document.title = c.name + " roadmap | Careerix";
+    setSeo(c);
 
     var status = c.verified
       ? '<span class="badge">Checked ' + e(c.updated) + "</span>"
@@ -1415,11 +1528,14 @@ window.CAREER_EXTRA = {
 
       '<div class="wrap">' + warn +
 
+      whoHtml(c) +
+
       '<section class="block"><h2>Your roadmap</h2>' + roadmapHtml(c) + "</section>" +
 
       planHtml(c) +
       dayHtml(c) +
       prosConsHtml(c) +
+      exploreHtml(c) +
 
       '<section class="block"><h2>Subjects and skills</h2>' +
       '<p class="muted">' + e(c.streamNote) + "</p>" +
@@ -1427,6 +1543,7 @@ window.CAREER_EXTRA = {
       '<div class="panel"><h3>Subjects</h3>' + tagList(c.subjects) + "</div>" +
       '<div class="panel"><h3>Skills that help</h3>' + tagList(c.skills) + "</div>" +
       "</div></section>" +
+      specializationsHtml(c) +
 
       '<section class="block"><h2>Entrance exams</h2>' +
       table(["Exam", "Conducted by", "What it is for"], c.exams.map(function (x) { return [x.name, x.body, x.note]; })) +
@@ -1451,6 +1568,7 @@ window.CAREER_EXTRA = {
 
       mythsHtml(c) +
       backupHtml(c) +
+      relatedHtml(c) +
 
       '<section class="block"><h2>Common questions</h2>' +
       c.faqs.map(function (f) { return '<details class="faq"><summary>' + e(f.q) + "</summary><p>" + e(f.a) + "</p></details>"; }).join("") +

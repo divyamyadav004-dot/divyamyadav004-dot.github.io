@@ -20,9 +20,10 @@
   </script>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Career quiz | Careerix</title>
+  <title>Career quiz with next-step guidance | Careerix</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3E%3Ccircle cx=%276%27 cy=%2722%27 r=%274%27 fill=%27%23f2b01e%27/%3E%3Cpath d=%27M6 22 C6 10, 24 20, 24 8%27 stroke=%27%230e7c7b%27 stroke-width=%273%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3Ccircle cx=%2724%27 cy=%278%27 r=%274%27 fill=%27%2315233b%27/%3E%3C/svg%3E">
-  <meta name="description" content="Answer 10 quick questions about what you enjoy and see career ideas that fit.">
+  <meta name="description" content="Take a career exploration quiz and get explained matches, suitable subjects, next steps, and alternative career ideas.">
+  <link rel="canonical" href="https://careerix.me/quiz.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet">
@@ -981,16 +982,42 @@ window.CAREERS = [
     if (back) back.addEventListener("click", function () { state.i--; showQuestion(); });
   }
 
-  function score() {
+  function tagCounts() {
     var counts = {};
     state.picks.forEach(function (pick, qi) {
       QUESTIONS[qi].o[pick][1].forEach(function (t) { counts[t] = (counts[t] || 0) + 1; });
     });
+    return counts;
+  }
+
+  function score(counts) {
+    counts = counts || tagCounts();
     return (window.CAREERS || []).map(function (c) {
       var s = 0;
       Object.keys(c.tags).forEach(function (t) { s += (counts[t] || 0) * c.tags[t]; });
       return { c: c, s: s };
     }).sort(function (a, b) { return b.s - a.s; }).filter(function (x) { return x.s > 0; }).slice(0, 3);
+  }
+
+  function whyMatch(c, counts) {
+    var top = Object.keys(c.tags || {}).map(function (t) {
+      return { tag: t, score: (counts[t] || 0) * c.tags[t] };
+    }).filter(function (x) { return x.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 2);
+    var map = {
+      tech: "technology and building tools",
+      maths: "logic and problem solving",
+      bio: "biology and health topics",
+      people: "working with people",
+      service: "service-oriented work",
+      business: "business and decisions",
+      create: "creative expression",
+      write: "writing and communication",
+      teach: "explaining and guiding others",
+      research: "analysis and deep study",
+      physical: "fitness and active work"
+    };
+    if (!top.length) return "Your answers align with key parts of this path.";
+    return "Your answers showed interest in " + top.map(function (x) { return map[x.tag] || x.tag; }).join(" and ") + ".";
   }
 
   function nextStepLine(c) {
@@ -1008,18 +1035,27 @@ window.CAREERS = [
   }
 
   function showResults() {
-    var top = score();
+    var counts = tagCounts();
+    var ranked = score(counts);
+    var top = ranked.slice(0, 3);
     var labels = ["Strong match", "Good match", "Worth exploring"];
     root.innerHTML =
       '<div class="quiz-card"><h2>Your top matches</h2>' +
-      '<p class="muted">Based on what you enjoy. This is a starting point, not a verdict. Explore the roadmaps and talk to a parent, teacher or counsellor.</p>' +
+      '<p class="muted">Based on what you enjoy. This quiz is for exploration, not a guaranteed career decision. Use these results as a starting point and discuss with a parent, teacher, or counsellor.</p>' +
       '<div class="result">' +
       top.map(function (x, i) {
-        var extra = '<p>' + nextStepLine(x.c) + "</p>";
+        var subjects = (x.c.subjects || []).slice(0, 3).join(", ");
+        var steps = (x.c.checklist || []).slice(0, 3);
+        var alternatives = ranked.filter(function (r) { return r.c.id !== x.c.id; }).slice(0, 2).map(function (r) { return r.c.name; });
         return '<div class="card ' + (i === 0 ? "strong" : "") + '">' +
           '<span class="badge">' + labels[i] + "</span>" +
           "<h3>" + e(x.c.name) + "</h3>" +
-          "<p>" + e(x.c.tagline) + "</p>" + extra +
+          "<p>" + e(x.c.tagline) + "</p>" +
+          '<p><strong>Why this may fit:</strong> ' + e(whyMatch(x.c, counts)) + "</p>" +
+          '<p><strong>Suitable subjects:</strong> ' + e(subjects || x.c.streamNote) + "</p>" +
+          '<p><strong>Next steps:</strong></p><ul>' + steps.map(function (s) { return "<li>" + e(s) + "</li>"; }).join("") + "</ul>" +
+          '<p><strong>Alternative careers:</strong> ' + e(alternatives.join(", ") || "Explore all careers") + "</p>" +
+          '<p>' + nextStepLine(x.c) + "</p>" +
           '<div class="btn-row"><a class="btn btn-primary" href="career.html?id=' + encodeURIComponent(x.c.id) + '">See roadmap</a></div>' +
           "</div>";
       }).join("") +
